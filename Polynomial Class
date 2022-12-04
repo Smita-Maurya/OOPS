@@ -1,0 +1,93 @@
+class Polynomial {
+    public:
+    int *degCoeff;// Name of your array (Don't change this)
+    int capacity;
+    Polynomial(){
+        this->degCoeff= new int[6];
+        this->capacity = 5;
+    }
+   // capacity = 5;
+    Polynomial(int capacity){
+        this->degCoeff = new int[capacity+1];
+        this->capacity = capacity;
+    }
+    Polynomial(Polynomial const &p){
+        int *newdeg = new int[p.capacity+1];
+        for(int i=0;i<=p.capacity;i++)
+            newdeg[i]= p.degCoeff[i];
+        this->degCoeff = newdeg;
+        this->capacity= p.capacity;
+        
+    }
+    
+    void setCoefficient(int deg , int coef){
+        if(deg>capacity){
+           int newcapacity = deg;
+            int *newdeg = new int[newcapacity+1];
+            for(int i=0;i<=capacity ; i++)
+                newdeg[i]=degCoeff[i];
+            this->degCoeff = newdeg;
+            this->capacity = newcapacity;
+            degCoeff[deg] = coef;
+            
+        }
+        else{
+            degCoeff[deg]=coef;
+        }
+    }
+     Polynomial operator+(Polynomial const &p2){
+        int newcap =max(this->capacity ,p2.capacity);
+          Polynomial p3(newcap);
+        for(int i=0;i<=newcap; i++){
+      
+       if(i<=capacity && i<=p2.capacity)
+                p3.degCoeff[i]= this->degCoeff[i]+p2.degCoeff[i];
+            else if(i<=capacity)
+                p3.degCoeff[i]=this->degCoeff[i];
+            else
+                p3.degCoeff[i]=p2.degCoeff[i];
+        }
+        return p3;
+    }
+    
+     Polynomial operator-(Polynomial const &p2){
+        int newcap =max(this->capacity ,p2.capacity);
+          Polynomial p3(newcap);
+        for(int i=0;i<=newcap; i++){
+      
+       if(i<=capacity && i<=p2.capacity)
+                p3.degCoeff[i]= this->degCoeff[i]-p2.degCoeff[i];
+            else if(i<=capacity)
+                p3.degCoeff[i]=this->degCoeff[i];
+            else
+                p3.degCoeff[i]=-p2.degCoeff[i];
+        }
+        return p3;
+    }
+    Polynomial operator*(Polynomial const &p2){
+        int newcap = this->capacity + p2.capacity;
+        Polynomial p3(newcap);
+            for(int i=0;i<=this->capacity;i++){
+                for(int j=0;j<=p2.capacity;j++){
+                    p3.degCoeff[i+j]+=this->degCoeff[i]*p2.degCoeff[j];
+                }
+}
+        return p3;
+    }
+    void operator=(Polynomial const &p){
+        int *newdeg = new int[p.capacity+1];
+        for(int i=0;i<p.capacity;i++)
+            newdeg[i]= p.degCoeff[i];
+        this->degCoeff = newdeg;
+        this->capacity=p.capacity;
+}
+    void print(){
+        for(int i=0;i<=this->capacity;i++){
+            if(degCoeff[i]!=0)
+              cout<<degCoeff[i]<<"x"<<i<<" ";
+        }
+        cout<<endl;
+    }
+    // Complete the class
+    
+};
